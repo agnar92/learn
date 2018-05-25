@@ -1,10 +1,11 @@
 import sys
+
+
 class TickTak(object):
 
     def __init__(self):
-        self.board = [['']*12 for i in range(12)]
+        self.board = [[''] * 12 for i in range(12)]
         self.count = 0
-
 
     def _print_board(self):
         for i in range(11):
@@ -13,16 +14,22 @@ class TickTak(object):
     def display_board(self):
         for i in range(12):
             if i is 3 or i is 7:
-                self.board[i] = ["-"]*11
+                self.board[i] = ["-"] * 11
             else:
-                self.board[i] = ([" "]*3+['|'])*2+[" "]*3
+                self.board[i] = ([" "] * 3 +
+                                 ['|']) * 2 + \
+                                [" "] * 3
         self._print_board()
 
     def refrash(self, row=0, kol=0, str=""):
-        while self.board[row][kol] == 'X' or self.board[row][kol] == 'O':
-            num = input('This field is already pick. Chose another section 1-9: ')
-            print(str)
-            row, kol = self.switch(int(num), str, True)
+        while self.board[row][kol] == 'X' or \
+                self.board[row][kol] == 'O':
+            num = input('This field is already pick. '
+                        'Chose another section 1-9: ')
+            row, kol = self.switch(
+                int(num),
+                str,
+                True)
 
         print("\n" * 20)
         self.board[row][kol] = str
@@ -40,7 +47,9 @@ class TickTak(object):
             8: [9, 5],
             9: [9, 9],
         }[num]
-        return (self.refrash(switch[0], switch[1], str) if re is False else switch)
+        return (self.refrash(switch[0],
+                             switch[1],
+                             str) if re is False else switch)
 
     def player_input(self, player=None):
         print("%s" % player)
@@ -49,12 +58,12 @@ class TickTak(object):
 
     def check_logic(self):
         result = False
-        vertical_mach = [1,5,9]
+        vertical_mach = [1, 5, 9]
         # horizontal search
         for i in range(12):
             mach_x_h = []
             mach_o_h = []
-            # horizonatal
+            # horizontal
             mach_x_h += [x for x in self.board[i] if x == 'X']
             mach_o_h += [x for x in self.board[i] if x == 'O']
             if len(mach_x_h) is 3 or len(mach_o_h) is 3:
@@ -69,8 +78,10 @@ class TickTak(object):
             if len(mach_x_v) is 3 or len(mach_o_v) is 3:
                 print('Win V')
                 sys.exit(0)
+
     def replay(self):
         main()
+
 
 def main():
     t = TickTak()
@@ -87,13 +98,15 @@ def main():
             sys.exit(0)
         t.switch(int(num_1), player_1.upper())
         t.check_logic()
-        if count is 9: break
+        if count is 9:
+            break
         num_2, count = t.player_input("Player_2")
         if num_2.lower() == "exit":
             sys.exit(0)
         t.switch(int(num_2), player_2.upper())
         t.check_logic()
-        if count is 9: break
+        if count is 9:
+            break
 
     replay = input('do you want replay? Yes or No \n')
     if replay.lower() == "yes":
@@ -101,6 +114,7 @@ def main():
     else:
         print('Finish game!')
         sys.exit(0)
+
 
 if __name__ == '__main__':
     main()
